@@ -1,3 +1,4 @@
+import { useTheme } from "@/contexts/ThemeProvider";
 import React, { useRef, useState } from "react";
 import {
   Dimensions,
@@ -21,19 +22,24 @@ type Props = {
 };
 
 export default function HorizontalScrollCategories({ categories }: Props) {
+  const { colors } = useTheme();
   const scrollRef = useRef<ScrollView>(null);
   const [position, setPosition] = useState(0);
 
   const handleScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     const x = e.nativeEvent.contentOffset.x;
     const contentWidth = e.nativeEvent.contentSize.width - width;
-
     const progress = contentWidth > 0 ? x / contentWidth : 0;
     setPosition(progress);
   };
 
   return (
-    <View style={styles.wrapper}>
+    <View
+      style={[
+        styles.wrapper,
+        { backgroundColor: colors.background },
+      ]}
+    >
       <ScrollView
         ref={scrollRef}
         horizontal
@@ -51,11 +57,19 @@ export default function HorizontalScrollCategories({ categories }: Props) {
         ))}
       </ScrollView>
 
-      <View style={styles.indicatorBackground}>
+      <View
+        style={[
+          styles.indicatorBackground,
+          { backgroundColor: colors.subBackground },
+        ]}
+      >
         <View
           style={[
             styles.indicator,
-            { transform: [{ translateX: position * 18 }] },
+            {
+              backgroundColor: colors.tint,
+              transform: [{ translateX: position * 18 }],
+            },
           ]}
         />
       </View>
@@ -65,7 +79,6 @@ export default function HorizontalScrollCategories({ categories }: Props) {
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: "#fff",
     paddingTop: 8,
     marginTop: -28,
     marginBottom: 8,
@@ -77,7 +90,6 @@ const styles = StyleSheet.create({
   indicatorBackground: {
     height: 4,
     width: 30,
-    backgroundColor: "#e5e5e5",
     borderRadius: 2,
     overflow: "hidden",
     alignSelf: "center",
@@ -86,7 +98,6 @@ const styles = StyleSheet.create({
   indicator: {
     width: 12,
     height: 4,
-    backgroundColor: "#ee4c2d",
     borderRadius: 2,
   },
 });

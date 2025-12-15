@@ -1,5 +1,12 @@
+import { useTheme } from "@/contexts/ThemeProvider";
 import { router } from "expo-router";
-import { ArrowLeftIcon, DotsThreeOutlineVerticalIcon, ShareNetworkIcon, ShoppingCartIcon, WhatsappLogoIcon } from "phosphor-react-native";
+import {
+  ArrowLeftIcon,
+  DotsThreeOutlineVerticalIcon,
+  ShareNetworkIcon,
+  ShoppingCartIcon,
+  WhatsappLogoIcon,
+} from "phosphor-react-native";
 import { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Badge from "../badges/IconNotificationBadge";
@@ -10,40 +17,41 @@ type HeaderProps = {
 };
 
 export default function ProductHeader({ scrolled }: HeaderProps) {
+  const { colors } = useTheme();
   const [cartCount] = useState(1);
-  const [messageCount] = useState(4);
+
+  const iconColor = scrolled ? colors.text : "#fff";
+  const iconBg = scrolled ? "transparent" : '#00000080';
+  const headerBg = scrolled ? colors.background : "transparent";
 
   return (
-    <View style={[
-      styles.header,
-      { backgroundColor: scrolled ? "#fff" : "transparent" }
-    ]}>
-        <TouchableOpacity onPress={() => router.back()}>
-            <View style={[styles.headerIcon, { backgroundColor: scrolled ? "transparent" : "#00000060" } ]}>
-                <ArrowLeftIcon size={26} color={scrolled ? "#ee4c2d" : "#fff"} weight="bold" />
-            </View>
-        </TouchableOpacity>
+    <View style={[styles.header, { backgroundColor: headerBg }]}>
+      <TouchableOpacity onPress={() => router.back()}>
+        <View style={[styles.headerIcon, { backgroundColor: iconBg }]}>
+          <ArrowLeftIcon size={26} color={iconColor} weight="bold" />
+        </View>
+      </TouchableOpacity>
 
-        {
-            scrolled && <SearchBar />
-        }
+      {scrolled && <SearchBar />}
 
-        <View style={styles.headerActions}>
-            <View style={[styles.headerIcon, { position: "relative", backgroundColor: scrolled ? "transparent" : "#00000060" } ]}>
-                <WhatsappLogoIcon size={26} color={scrolled ? "#ee4c2d" : "#fff"} />
-            </View>
-            <View style={[styles.headerIcon, { backgroundColor: scrolled ? "transparent" : "#00000060" } ]}>
-              <ShareNetworkIcon size={26} color={scrolled ? "#ee4c2d" : "#fff"} />
-            </View>
-            <View style={[styles.headerIcon, { backgroundColor: scrolled ? "transparent" : "#00000060" } ]}>
-              <Badge count={1} />
-              <ShoppingCartIcon size={26} color={scrolled ? "#ee4c2d" : "#fff"} />
-            </View>
-            <View style={[styles.headerIcon, { backgroundColor: scrolled ? "transparent" : "#00000060" } ]}>
-              <DotsThreeOutlineVerticalIcon size={26} color={scrolled ? "#ee4c2d" : "#fff"} />
-            </View>
+      <View style={styles.headerActions}>
+        <View style={[styles.headerIcon, { backgroundColor: iconBg }]}>
+          <WhatsappLogoIcon size={26} color={iconColor} />
         </View>
 
+        <View style={[styles.headerIcon, { backgroundColor: iconBg }]}>
+          <ShareNetworkIcon size={26} color={iconColor} />
+        </View>
+
+        <View style={[styles.headerIcon, { backgroundColor: iconBg }]}>
+          <Badge count={cartCount} />
+          <ShoppingCartIcon size={26} color={iconColor} />
+        </View>
+
+        <View style={[styles.headerIcon, { backgroundColor: iconBg }]}>
+          <DotsThreeOutlineVerticalIcon size={26} color={iconColor} />
+        </View>
+      </View>
     </View>
   );
 }
@@ -58,8 +66,8 @@ const styles = StyleSheet.create({
     padding: 12,
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
     justifyContent: "space-between",
+    gap: 8,
   },
   headerIcon: {
     padding: 5,
@@ -68,8 +76,5 @@ const styles = StyleSheet.create({
   headerActions: {
     flexDirection: "row",
     gap: 8,
-  },
-  iconContainer: {
-    position: "relative",
   },
 });

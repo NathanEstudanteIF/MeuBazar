@@ -1,5 +1,5 @@
+import { ThemeProvider } from '@/contexts/ThemeProvider';
 import { Inter_400Regular, Inter_500Medium, Inter_700Bold, useFonts } from '@expo-google-fonts/inter';
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
@@ -18,7 +18,7 @@ export default function RootLayout() {
   if (!loaded) return null;
 
   return (
-    <ThemeProvider value={DefaultTheme} >
+    <ThemeProvider >
       <Stack>
         <Stack.Screen name="(downTab)" options={{ headerShown: false }} />
       </Stack>

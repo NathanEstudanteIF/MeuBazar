@@ -40,6 +40,7 @@ export default function BannerCarousel({ images }: BannerCarouselProps) {
             key={idx}
             source={typeof uri === "string" ? { uri } : uri}
             style={styles.image}
+            resizeMode="contain"
           />
         ))}
       </ScrollView>
@@ -64,7 +65,6 @@ const styles = StyleSheet.create({
   image: {
     width,
     height: 220,
-    resizeMode: "contain",
   },
   dotsContainer: {
     position: "absolute",
@@ -82,6 +82,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   activeDot: {
-    backgroundColor: "#ee4c2d",
+    backgroundColor: "#8263ae",
   },
 });

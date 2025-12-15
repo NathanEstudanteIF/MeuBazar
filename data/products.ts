@@ -1,5 +1,3 @@
-import { ProductBadgeType } from "@/types/enums/ProductBadgeType";
-import { ProductShippingType } from "@/types/enums/ProductShippingType";
 
 export const products = [
   {
@@ -11,8 +9,6 @@ export const products = [
     price: 59.90,
     sales: 8200,
     discount: 0.40,
-    badge: ProductBadgeType.INDICATE,
-    shipping: ProductShippingType.NATIONAL,
   },
   {
     id: 2,
@@ -23,8 +19,6 @@ export const products = [
     price: 46.90,
     sales: 5600,
     discount: 0.33,
-    badge: ProductBadgeType.OFICIAL,
-    shipping: ProductShippingType.INTERNATIONAL,
   },
   {
     id: 3,
@@ -37,8 +31,6 @@ export const products = [
     price: 105.99,
     sales: 491,
     discount: 0.47,
-    badge: ProductBadgeType.OFICIAL,
-    shipping: ProductShippingType.NATIONAL,
   },
   {
     id: 4,
@@ -49,7 +41,5 @@ export const products = [
     price: 499.9,
     sales: 330,
     discount: 0,
-    badge: ProductBadgeType.NONE,
-    shipping: ProductShippingType.NONE,
   },
 ];

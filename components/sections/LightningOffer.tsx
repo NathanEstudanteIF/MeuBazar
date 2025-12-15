@@ -6,7 +6,7 @@ export function LightningOffer () {
 
     return (
         <LinearGradient
-            colors={["#ee4c2d", "#ee4c2d", "#fe7237"]}
+            colors={["#8263ae", "#8263ae", "#fe7237"]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.lightningOffers}

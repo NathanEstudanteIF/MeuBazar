@@ -1,24 +1,53 @@
+import { useTheme } from "@/contexts/ThemeProvider";
 import { useRouter } from "expo-router";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { MoonIcon, SunIcon } from "phosphor-react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function AccountScreen() {
   const router = useRouter();
+  const { colors, mode, toggleTheme } = useTheme();
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("@/assets/images/error.png")}
-        style={styles.image}
-        resizeMode="contain"
-      />
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={styles.header}>
 
-      <Text style={styles.title}>Função Indisponível</Text>
-      <Text style={styles.subtitle}>
-        Esta funcionalidade está em desenvolvimento.
-      </Text>
-      <TouchableOpacity style={styles.button} onPress={() => router.push("/")}>
-        <Text style={styles.buttonText}>Retornar ao Início</Text>
+      </View>
+      <TouchableOpacity style={styles.themeToggle} onPress={toggleTheme}>
+        {
+          mode === "light" ?
+            <SunIcon
+              size={32}
+              color={colors.tint}
+              weight={'fill'}>
+            </SunIcon> 
+            : 
+            <MoonIcon
+              size={32}
+              color={colors.tint}
+              weight={'fill'}>
+            </MoonIcon>
+        }
       </TouchableOpacity>
+
+      <View style={[styles.avatar, { borderColor: colors.tint }]}>
+        <Image
+          source={require("@/assets/images/error.png")}
+          style={styles.avatarImage}
+        />
+      </View>
+
+      <Text style={[styles.name, { color: colors.text }]}>
+        Usuário Exemplo
+      </Text>
+      <Text style={[styles.email, { color: colors.icon }]}>
+        usuario@email.com
+      </Text>
     </View>
   );
 }
@@ -27,37 +56,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+  },
+  header: {
+    flexDirection: "row",
+    margin: 0,
+  },
+  themeToggle: {
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+    alignSelf: "flex-end"
+  },
+  avatar: {
+    marginTop: 40,
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    borderWidth: 2,
+    alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 24,
-    backgroundColor: "#fff",
+    marginBottom: 16,
   },
-  image: {
-    width: 240,
-    height: 240,
-    margin: 24,
+  avatarImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: "700",
-    margin: 12,
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: "center",
-    color: "#444",
-    lineHeight: 22,
-    margin: 12,
-  },
-  button: {
+  name: {
     fontSize: 20,
-    margin: 12,
-    padding: 12,
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ee4c2d",
+    fontWeight: "700",
+    marginTop: 8,
   },
-  buttonText: {
+  email: {
     fontSize: 16,
-    color: "#ee4c2d",
+    marginBottom: 24,
   },
 });

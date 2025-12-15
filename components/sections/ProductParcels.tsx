@@ -6,7 +6,7 @@ export default function ProductParcels() {
     
     return (
         <View style={styles.parcelsBox}>
-            <CreditCardIcon size={20} color="#ee4c2d" style={styles.truckIcon} /> 
+            <CreditCardIcon size={20} color="#8263ae" style={styles.truckIcon} /> 
             <Text style={styles.parcelsLabelText}>SParcelado:</Text>
             <Text style={styles.parcelsDesc}>Parcele em até 12x</Text>
             <CaretRightIcon color="#666" size={18} style={styles.caretIcon} />
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   parcelsLabelText: {
     marginHorizontal: 8,
     fontSize: 16,
-    color: "#ee4c2d",
+    color: "#8263ae",
   },
   truckIcon: {
     marginLeft: 1,

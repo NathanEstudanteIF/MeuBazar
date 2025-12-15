@@ -1,41 +1,58 @@
+import { useTheme } from "@/contexts/ThemeProvider";
 import { CaretRightIcon, TruckIcon } from "phosphor-react-native";
 import { StyleSheet, Text, View } from "react-native";
 
-
 export default function ProductFreight() {
-    
-    return (
-        <View style={styles.freightBox}>
-            <TruckIcon size={20} color="#32a596" style={styles.truckIcon} /> 
-            <Text style={styles.freightLabelText}>Frete grátis</Text>
-            <Text style={styles.oldPrice}>R$15,69</Text>
-            <Text style={styles.freightDesc}>R$0,00 com cupom</Text>
-            <CaretRightIcon color="#666" size={18} style={styles.caretIcon} />
-        </View>
-    );
+  const { colors } = useTheme();
+
+  return (
+    <View
+      style={[
+        styles.freightBox,
+        {
+          backgroundColor: colors.background,
+          borderBottomColor: colors.icon,
+        },
+      ]}
+    >
+      <TruckIcon size={20} color={colors.tint} style={styles.truckIcon} />
+
+      <Text style={[styles.freightLabelText, { color: colors.tint }]}>
+        Frete grátis
+      </Text>
+
+      <Text style={[styles.oldPrice, { color: colors.icon }]}>
+        R$15,69
+      </Text>
+
+      <Text style={[styles.freightDesc, { color: colors.text }]}>
+        R$0,00 com cupom
+      </Text>
+
+      <CaretRightIcon
+        color={colors.icon}
+        size={18}
+        style={styles.caretIcon}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   freightBox: {
     flexDirection: "row",
     alignItems: "baseline",
-    backgroundColor: "#fff",
-    padding: 12, 
-    borderBottomColor: "#eee",
+    padding: 12,
     borderBottomWidth: 1,
-  },
-  freightLabel: {
-    flexDirection: "row",
-    alignItems: "center",
   },
   freightLabelText: {
     marginHorizontal: 8,
     fontSize: 16,
-    color: "#32a596",
+    fontWeight: "500",
   },
   truckIcon: {
     marginLeft: 1,
-    alignSelf: "flex-end"
+    alignSelf: "flex-end",
   },
   caretIcon: {
     marginLeft: "auto",
@@ -44,11 +61,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
     fontSize: 16,
     textDecorationLine: "line-through",
-    color: "#999",
   },
-freightDesc: { 
+  freightDesc: {
     marginHorizontal: 3,
     fontSize: 16,
-    color: "#222" 
   },
 });

@@ -1,18 +1,24 @@
-import { ProductBadgeType } from "@/types/enums/ProductBadgeType";
+import { useTheme } from "@/contexts/ThemeProvider";
 import { StyleSheet, Text, View } from "react-native";
-import BadgeTypeBadge from "../badges/ProductCardTypeBadge";
 
 type TitleProps = {
   title: string;
-  type: ProductBadgeType;
 };
 
-export default function ProductTitleInfo({ title, type } : TitleProps) {
-  return (
-    <View style={styles.container}>
+export default function ProductTitleInfo({ title }: TitleProps) {
+  const { colors } = useTheme();
 
-      <Text style={styles.title}>
-        <Text style={styles.badge}><BadgeTypeBadge type={type} /></Text>
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: colors.background,
+          borderBottomColor: colors.icon,
+        },
+      ]}
+    >
+      <Text style={[styles.title, { color: colors.text }]}>
         {title}
       </Text>
     </View>
@@ -20,19 +26,14 @@ export default function ProductTitleInfo({ title, type } : TitleProps) {
 }
 
 const styles = StyleSheet.create({
-  container: { 
-    backgroundColor: "#fff",
+  container: {
     flexDirection: "row",
     alignItems: "flex-end",
-    padding: 12, 
-    borderBottomColor: "#eee",
+    padding: 12,
     borderBottomWidth: 1,
   },
-  badge: {
-    bottom: 3,
-  },
-  title: { 
+  title: {
     fontSize: 16,
-    color: "#222"
+    fontWeight: "500",
   },
 });

@@ -1,24 +1,33 @@
-import Badge from '@/components/badges/IconNotificationBadge';
-import { HapticTab } from '@/components/haptic-tab';
-import { Colors } from '@/constants/theme';
-import { Tabs } from 'expo-router';
-import { BellIcon, HouseIcon, ShoppingBagIcon, UserIcon, VideoCameraIcon } from 'phosphor-react-native';
-import React from 'react';
-import { View } from 'react-native';
+import Badge from "@/components/badges/IconNotificationBadge";
+import { HapticTab } from "@/components/haptic-tab";
+import { useTheme } from "@/contexts/ThemeProvider";
+import { Tabs } from "expo-router";
+import {
+  BellIcon,
+  HouseIcon,
+  ShoppingCartIcon,
+  UserIcon
+} from "phosphor-react-native";
+import React from "react";
+import { View } from "react-native";
 
 export default function TabLayout() {
+  const { colors } = useTheme();
+
   return (
     <Tabs
       screenOptions={{
         tabBarStyle: {
-          paddingTop: 4,
-          height: 60,
+          paddingTop: 8,
+          height: 66,
+          backgroundColor: colors.background,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 12,
           paddingTop: 4,
         },
-        tabBarActiveTintColor: Colors['light'].tint,
+        tabBarActiveTintColor: colors.tint,
+        tabBarInactiveTintColor: colors.icon,
         headerShown: false,
         tabBarButton: HapticTab,
       }}
@@ -26,40 +35,26 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Início',
+          title: "Início",
           tabBarIcon: ({ color, focused }) => (
             <HouseIcon
-              size={28}
+              size={32}
               color={color}
-              weight={focused ? 'fill' : 'regular'}
-            />
-          ),
-        }}
-      />
- 
-      <Tabs.Screen
-        name="officialProducts"
-        options={{
-          title: 'Oficiais',
-          tabBarIcon: ({ color, focused }) => (
-            <ShoppingBagIcon
-              size={28}
-              color={color}
-              weight={focused ? 'fill' : 'regular'}
+              weight={focused ? "fill" : "regular"}
             />
           ),
         }}
       />
 
       <Tabs.Screen
-        name="live"
+        name="cart"
         options={{
-          title: 'Live e Vídeo',
+          title: "Carrinho",
           tabBarIcon: ({ color, focused }) => (
-            <VideoCameraIcon
-              size={28}
+            <ShoppingCartIcon
+              size={32}
               color={color}
-              weight={focused ? 'fill' : 'regular'}
+              weight={focused ? "fill" : "regular"}
             />
           ),
         }}
@@ -68,15 +63,15 @@ export default function TabLayout() {
       <Tabs.Screen
         name="notifications"
         options={{
-          title: 'Notificações',
+          title: "Notificações",
           tabBarIcon: ({ color, focused }) => (
             <View>
               <BellIcon
-                size={28}
+                size={32}
                 color={color}
-                weight={focused ? 'fill' : 'regular'}
-              ></BellIcon>
-              <Badge count={13}></Badge>
+                weight={focused ? "fill" : "regular"}
+              />
+              <Badge count={13} />
             </View>
           ),
         }}
@@ -85,17 +80,16 @@ export default function TabLayout() {
       <Tabs.Screen
         name="account"
         options={{
-          title: 'Eu',
+          title: "Conta",
           tabBarIcon: ({ color, focused }) => (
             <UserIcon
-              size={28}
+              size={32}
               color={color}
-              weight={focused ? 'fill' : 'regular'}
+              weight={focused ? "fill" : "regular"}
             />
           ),
         }}
       />
     </Tabs>
   );
-
 }

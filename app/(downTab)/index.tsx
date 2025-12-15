@@ -5,22 +5,33 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import BannerCarousel from "@/components/caroussels/BannerCarousel";
 import ProductsGrid from "@/components/grids/ProductsGrid";
 import Header from "@/components/headers/Header";
-import Advertiser from "@/components/misc/Advertiser";
 import HorizontalScrollCategories from "@/components/scrolls/HorizontalScrollCategories";
+import { useTheme } from "@/contexts/ThemeProvider";
 import { bannerImages } from "@/data/bannerImages";
 import { categories } from "@/data/categories";
 import { products } from "@/data/products";
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
+  const { colors, mode } = useTheme();
   const [scrolled, setScrolled] = useState(false);
 
   return (
-    <View style={{ flex: 1, paddingTop: insets.top }}>
+    <View
+      style={{
+        flex: 1,
+        paddingTop: insets.top,
+        backgroundColor: colors.background,
+      }}
+    >
       <StatusBar
         translucent
-        backgroundColor={scrolled ? "#fff" : "transparent"}
-        barStyle={scrolled ? "dark-content" : "light-content"}
+        backgroundColor={scrolled ? colors.background : "transparent"}
+        barStyle={
+          mode === "dark"
+            ? "light-content"
+            : "dark-content"
+        }
       />
 
       <Header scrolled={scrolled} />
@@ -29,13 +40,10 @@ export default function HomeScreen() {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         onScroll={(e) => setScrolled(e.nativeEvent.contentOffset.y > 1)}
+        scrollEventThrottle={16}
       >
         <BannerCarousel images={bannerImages} />
-
         <HorizontalScrollCategories categories={categories} />
-
-        <Advertiser source={require("../../assets/images/advertiser.jpg")} />
-
         <ProductsGrid products={products} />
       </ScrollView>
     </View>

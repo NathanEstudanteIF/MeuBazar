@@ -1,27 +1,45 @@
+import { useTheme } from "@/contexts/ThemeProvider";
 import { CameraIcon, MagnifyingGlassIcon } from "phosphor-react-native";
 import { StyleSheet, TextInput, View } from "react-native";
-
 export default function SearchBar() {
+  const { colors } = useTheme();
 
-    return (
-        <View style={styles.searchBar}>
-            <MagnifyingGlassIcon size={20} color="#777" weight="regular" />
-            <TextInput
-                placeholder="Buscar em Meu Bazar"
-                placeholderTextColor="#ee4c2d"
-                style={styles.searchInput}
-            />
-            <CameraIcon size={20} color="#777" weight="regular" />
-        </View>
-    )
+  return (
+    <View
+      style={[
+        styles.searchBar,
+        { backgroundColor: colors.subBackground },
+      ]}
+    >
+      <MagnifyingGlassIcon
+        size={20}
+        weight="regular"
+        color={colors.icon}
+      />
+
+      <TextInput
+        placeholder="Buscar em Meu Bazar"
+        placeholderTextColor={colors.icon}
+        style={[
+          styles.searchInput,
+          { color: colors.text },
+        ]}
+      />
+
+      <CameraIcon
+        size={20}
+        weight="regular"
+        color={colors.icon}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    searchBar: {
+  searchBar: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 8,
@@ -30,6 +48,5 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 14,
-    color: "#777",
   },
-})
+});

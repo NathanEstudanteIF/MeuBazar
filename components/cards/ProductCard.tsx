@@ -1,49 +1,59 @@
 import { Product } from "@/types/models/product";
+import { router } from "expo-router";
 import { DotsThreeIcon } from "phosphor-react-native";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { router } from "expo-router";
+import { useTheme } from "@/contexts/ThemeProvider";
 import DiscountBadge from "../badges/ProductCardDiscountBadge";
-import ShippingBadge from "../badges/ProductCardShippingBadge";
-import BadgeTypeBadge from "../badges/ProductCardTypeBadge";
-
 type ProductCardProps = {
   product: Product;
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { colors } = useTheme();
+
   return (
     <TouchableOpacity
-      style={styles.productCard}
-      onPress={() => router.push({
-        pathname: "/product/[id]",
-        params: { id: product.id },
-      })}
+      style={[
+        styles.productCard,
+        { backgroundColor: colors.background },
+      ]}
+      onPress={() =>
+        router.push({
+          pathname: "/product/[id]",
+          params: { id: product.id },
+        })
+      }
     >
       <View style={styles.productImageContainer}>
-        <Image source={ product.images[0] } style={styles.productImage} />
-
-        <ShippingBadge type={product.shipping} />
+        <Image source={product.images[0]} style={styles.productImage} />
+        
         {product.discount > 0 && <DiscountBadge value={product.discount} />}
       </View>
 
       <View style={styles.productInfo}>
-        <Text style={styles.productTitle} numberOfLines={2}>
-          <BadgeTypeBadge type={product.badge} />
+        <Text
+          style={[styles.productTitle, { color: colors.text }]}
+          numberOfLines={2}
+        >
           {product.title}
         </Text>
 
         <View style={styles.productFooter}>
-          <Text style={styles.productPrice}>R$ {product.price.toFixed(2)}</Text>
+          <Text style={[styles.productPrice, { color: colors.tint }]}>
+            R$ {product.price.toFixed(2)}
+          </Text>
 
           {product.sales > 1000 && (
-            <Text style={styles.productSales}>
+            <Text
+              style={[styles.productSales, { color: colors.icon }]}
+            >
               {Math.floor(product.sales / 1000)}mil+ vendidos
             </Text>
           )}
 
-          <DotsThreeIcon />
+          <DotsThreeIcon size={18} color={colors.icon} />
         </View>
       </View>
     </TouchableOpacity>
@@ -53,7 +63,6 @@ export default function ProductCard({ product }: ProductCardProps) {
 const styles = StyleSheet.create({
   productCard: {
     width: "48%",
-    backgroundColor: "#fff",
     borderRadius: 8,
     overflow: "hidden",
     elevation: 2,
@@ -79,7 +88,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   productPrice: {
-    color: "#ee4c2d",
     fontSize: 16,
     fontWeight: "bold",
   },
