@@ -1,15 +1,13 @@
 import { useTheme } from "@/contexts/ThemeProvider";
 import { LinearGradient } from "expo-linear-gradient";
-import { ArrowRightIcon, HeartIcon } from "phosphor-react-native";
+import { ArrowRightIcon } from "phosphor-react-native";
 import { StyleSheet, Text, View } from "react-native";
 
 type ProductPriceProps = {
   price: number;
-  discount: number;
-  sales: number;
 };
 
-export function ProductPrice({ price, discount, sales }: ProductPriceProps) {
+export function ProductPrice({ price }: ProductPriceProps) {
   const { colors, mode } = useTheme();
 
   return (
@@ -28,32 +26,6 @@ export function ProductPrice({ price, discount, sales }: ProductPriceProps) {
         <Text style={[styles.priceNumber, { color: colors.tint }]}>
           {price.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
         </Text>
-
-        {discount > 0 && (
-          <>
-            <Text style={[styles.oldPrice, { color: colors.icon }]}>
-              R$
-              {(price / (1 - discount)).toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-              })}
-            </Text>
-            <Text
-              style={[
-                styles.discount,
-                { color: colors.tint, backgroundColor: colors.background },
-              ]}
-            >
-              {Math.round(discount * 100)}%
-            </Text>
-          </>
-        )}
-
-        <View style={styles.sales}>
-          <Text style={[styles.salesInfo, { color: colors.text }]}>
-            {sales} Vendido(s)
-          </Text>
-          <HeartIcon color={colors.icon} size={18} style={styles.salesIcon} />
-        </View>
       </View>
 
       <View style={styles.priceRow}>

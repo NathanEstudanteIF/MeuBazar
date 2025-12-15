@@ -1,9 +1,16 @@
 import { useTheme } from "@/contexts/ThemeProvider";
+import { Rating } from "@/types/models/product";
 import { CaretRightIcon, StarIcon } from "phosphor-react-native";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function ProductRating() {
+type RatingProps = {
+  rating?: Rating;
+};
+
+export default function ProductRating({ rating }: RatingProps) {
   const { colors } = useTheme();
+
+  if (!rating) return null;
 
   return (
     <View
@@ -15,14 +22,16 @@ export default function ProductRating() {
         },
       ]}
     >
-      <Text style={[styles.ratingNumber, { color: colors.text }]}>4.9</Text>
+      <Text style={[styles.ratingNumber, { color: colors.text }]}>
+        {rating.rate.toFixed(1)}
+      </Text>
 
       <View style={styles.ratingIcon}>
         <StarIcon size={20} weight="fill" color="#FFC317" />
       </View>
 
       <Text style={[styles.ratingSubtitle, { color: colors.text }]}>
-        Avaliações do produto (257)
+        Avaliações do produto ({rating.count})
       </Text>
 
       <Text style={[styles.caretIconText, { color: colors.icon }]}>
@@ -38,7 +47,6 @@ const styles = StyleSheet.create({
   ratingBox: {
     flexDirection: "row",
     alignItems: "baseline",
-    marginTop: 32,
     padding: 12,
     borderBottomWidth: 1,
   },

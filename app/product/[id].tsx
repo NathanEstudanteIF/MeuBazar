@@ -7,23 +7,31 @@ import ProductRating from "@/components/sections/ProductRating";
 import ProductTitleInfo from "@/components/sections/ProductTitleInfo";
 import ProductVariations from "@/components/sections/ProductVariations";
 import { useTheme } from "@/contexts/ThemeProvider";
-import { products } from "@/data/products";
+import { fetchProductById } from "@/services/products";
+import { Product } from "@/types/models/product";
 import { Stack, useLocalSearchParams } from "expo-router";
-import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, ScrollView, StyleSheet, View } from "react-native";
 
 export default function ProductDetails() {
-  const [scrolled, setScrolled] = useState(false);
   const { colors } = useTheme();
-
   const { id } = useLocalSearchParams();
-  const product = products.find((p) => p.id === Number(id));
+  const [product, setProduct] = useState<Product | null>(null);
+  const [scrolled, setScrolled] = useState(false);
+  
+  useEffect(() => {
+    fetchProductById(Number(id)).then(setProduct);
+  }, [id]);
 
-  if (!product) {
+  if (product == null) {
     return (
-      <View style={[styles.notFound, { backgroundColor: colors.background }]}>
-        <Text style={{ color: colors.text }}>Produto não encontrado.</Text>
-      </View>
+      <>
+        <Stack.Screen options={{ headerShown: false }} />
+
+        <View style={[styles.notFound, { backgroundColor: colors.background }]}>
+          <ActivityIndicator size="large" color={colors.tint} />
+        </View>
+      </>
     );
   }
 
@@ -35,11 +43,8 @@ export default function ProductDetails() {
 
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <ScrollView
-          style={styles.scrollView}
+          onScroll={(e) => setScrolled(e.nativeEvent.contentOffset.y > 1)}
           showsVerticalScrollIndicator={false}
-          onScroll={(e) =>
-            setScrolled(e.nativeEvent.contentOffset.y > 1)
-          }
         >
           <ProductImageCarousel images={product.images} />
 
@@ -47,34 +52,22 @@ export default function ProductDetails() {
 
           <ProductPrice
             price={product.price}
-            discount={product.discount}
-            sales={product.sales}
           />
 
           <ProductTitleInfo title={product.title} />
 
           <ProductFreight />
 
-          <ProductRating />
-
+          <ProductRating rating={product.rating} />
         </ScrollView>
-
-        <ProductFooter />
       </View>
+
+      <ProductFooter product={product} />
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  notFound: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  container: { flex: 1 },
+  notFound: { flex: 1, alignItems: "center", justifyContent: "center" },
 });

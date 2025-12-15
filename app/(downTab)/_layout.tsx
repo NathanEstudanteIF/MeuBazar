@@ -1,5 +1,6 @@
 import Badge from "@/components/badges/IconNotificationBadge";
 import { HapticTab } from "@/components/haptic-tab";
+import { useCart } from "@/contexts/CartProvider";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { Tabs } from "expo-router";
 import {
@@ -13,6 +14,9 @@ import { View } from "react-native";
 
 export default function TabLayout() {
   const { colors } = useTheme();
+  const { cart } = useCart();
+
+  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <Tabs
@@ -51,11 +55,14 @@ export default function TabLayout() {
         options={{
           title: "Carrinho",
           tabBarIcon: ({ color, focused }) => (
-            <ShoppingCartIcon
-              size={32}
-              color={color}
-              weight={focused ? "fill" : "regular"}
-            />
+            <View>
+              <ShoppingCartIcon
+                size={32}
+                color={color}
+                weight={focused ? "fill" : "regular"}
+              />
+              <Badge count={cartCount} />
+            </View>
           ),
         }}
       />
@@ -65,14 +72,11 @@ export default function TabLayout() {
         options={{
           title: "Notificações",
           tabBarIcon: ({ color, focused }) => (
-            <View>
-              <BellIcon
-                size={32}
-                color={color}
-                weight={focused ? "fill" : "regular"}
-              />
-              <Badge count={13} />
-            </View>
+            <BellIcon
+              size={32}
+              color={color}
+              weight={focused ? "fill" : "regular"}
+            />
           ),
         }}
       />

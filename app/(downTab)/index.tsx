@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StatusBar, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -9,12 +9,18 @@ import HorizontalScrollCategories from "@/components/scrolls/HorizontalScrollCat
 import { useTheme } from "@/contexts/ThemeProvider";
 import { bannerImages } from "@/data/bannerImages";
 import { categories } from "@/data/categories";
-import { products } from "@/data/products";
+import { fetchProducts } from "@/services/products";
+import { Product } from "@/types/models/product";
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { colors, mode } = useTheme();
   const [scrolled, setScrolled] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  
+  useEffect(() => {
+    fetchProducts().then(setProducts);
+  }, []);
 
   return (
     <View
@@ -40,7 +46,6 @@ export default function HomeScreen() {
         style={styles.scrollView}
         showsVerticalScrollIndicator={false}
         onScroll={(e) => setScrolled(e.nativeEvent.contentOffset.y > 1)}
-        scrollEventThrottle={16}
       >
         <BannerCarousel images={bannerImages} />
         <HorizontalScrollCategories categories={categories} />

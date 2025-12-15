@@ -4,12 +4,10 @@ import {
   ArrowLeftIcon,
   DotsThreeOutlineVerticalIcon,
   ShareNetworkIcon,
-  ShoppingCartIcon,
-  WhatsappLogoIcon,
+  WhatsappLogoIcon
 } from "phosphor-react-native";
 import { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import Badge from "../badges/IconNotificationBadge";
 import SearchBar from "../bars/SearchBar";
 
 type HeaderProps = {
@@ -41,11 +39,6 @@ export default function ProductHeader({ scrolled }: HeaderProps) {
 
         <View style={[styles.headerIcon, { backgroundColor: iconBg }]}>
           <ShareNetworkIcon size={26} color={iconColor} />
-        </View>
-
-        <View style={[styles.headerIcon, { backgroundColor: iconBg }]}>
-          <Badge count={cartCount} />
-          <ShoppingCartIcon size={26} color={iconColor} />
         </View>
 
         <View style={[styles.headerIcon, { backgroundColor: iconBg }]}>

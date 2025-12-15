@@ -1,13 +1,12 @@
-import { ProductBadgeType } from "../enums/ProductBadgeType";
-import { ProductShippingType } from "../enums/ProductShippingType";
+export type Rating = {
+  rate: number;
+  count: number;
+};
 
 export type Product = {
   id: number;
   title: string;
-  images: number[];
+  images: string[];
   price: number;
-  sales: number;
-  discount: number;
-  badge: ProductBadgeType;
-  shipping: ProductShippingType;
+  rating?: Rating;
 };

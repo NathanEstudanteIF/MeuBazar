@@ -5,7 +5,6 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { useTheme } from "@/contexts/ThemeProvider";
-import DiscountBadge from "../badges/ProductCardDiscountBadge";
 type ProductCardProps = {
   product: Product;
 };
@@ -27,9 +26,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       }
     >
       <View style={styles.productImageContainer}>
-        <Image source={product.images[0]} style={styles.productImage} />
-        
-        {product.discount > 0 && <DiscountBadge value={product.discount} />}
+        <Image resizeMode="contain" source={product.images[0]} style={styles.productImage} />
       </View>
 
       <View style={styles.productInfo}>
@@ -44,14 +41,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           <Text style={[styles.productPrice, { color: colors.tint }]}>
             R$ {product.price.toFixed(2)}
           </Text>
-
-          {product.sales > 1000 && (
-            <Text
-              style={[styles.productSales, { color: colors.icon }]}
-            >
-              {Math.floor(product.sales / 1000)}mil+ vendidos
-            </Text>
-          )}
 
           <DotsThreeIcon size={18} color={colors.icon} />
         </View>

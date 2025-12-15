@@ -1,15 +1,24 @@
+import { useCart } from "@/contexts/CartProvider";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { Product } from "@/types/models/product";
 import { ChatsCircleIcon, ShoppingCartSimpleIcon } from "phosphor-react-native";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-export default function ProductFooter() {
+type ProductFooterProps = {
+  product?: Product;
+};
+
+export default function ProductFooter({ product }: ProductFooterProps) {
   const { colors } = useTheme();
+  const { increaseFromCart } = useCart();
+
+  const handleAddToCart = () => {
+    if (product) increaseFromCart(product);
+  };
 
   return (
     <View style={[styles.footer, { borderColor: colors.icon, backgroundColor: colors.background }]}>
-      <TouchableOpacity
-        style={[styles.chatButton, { backgroundColor: colors.background }]}
-      >
+      <TouchableOpacity style={[styles.chatButton, { backgroundColor: colors.background }]}>
         <ChatsCircleIcon size={32} color={colors.tint} />
       </TouchableOpacity>
 
@@ -17,12 +26,14 @@ export default function ProductFooter() {
 
       <TouchableOpacity
         style={[styles.cartButton, { backgroundColor: colors.background }]}
+        onPress={handleAddToCart}
       >
         <ShoppingCartSimpleIcon size={32} color={colors.tint} />
       </TouchableOpacity>
 
       <TouchableOpacity
         style={[styles.buyButton, { backgroundColor: colors.tint }]}
+        onPress={handleAddToCart}
       >
         <Text style={styles.buyText}>Compre agora</Text>
       </TouchableOpacity>

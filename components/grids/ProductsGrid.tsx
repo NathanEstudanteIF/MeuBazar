@@ -1,7 +1,6 @@
 import { useTheme } from "@/contexts/ThemeProvider";
 import { Product } from "@/types/models/product";
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
 import { StyleSheet } from "react-native";
 import ProductCard from "../cards/ProductCard";
 
@@ -10,13 +9,11 @@ type Props = {
 };
 
 export default function ProductsGrid({ products }: Props) {
-  const { colors, mode } = useTheme();
+  const { colors } = useTheme();
 
   return (
     <LinearGradient
-      colors={
-        [colors.background, colors.subBackground]
-      }
+      colors={[colors.background, colors.subBackground]}
       start={{ x: 0.5, y: 0 }}
       end={{ x: 0.5, y: 1 }}
       style={styles.grid}
